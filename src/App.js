@@ -3,31 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 import ShowChallenge from './ShowChallenge'
 
-const value1 = Math.floor(Math.random() * 100);
-const value2 = Math.floor(Math.random() * 100);
-const value3 = Math.floor(Math.random() * 100);
-const proposedAnswer = Math.floor(Math.random() * 3) + value1 + value2 + value3;
-//const numQuestions = 2;
-//const numCorrect = 1;
-
 class App extends Component {
   
   //define state
   state = {
-    numQuestions: 12,
-    numCorrect: 11   
+    numQuestions: 0,
+    numCorrect: 0   
   }
 
-  //true anser handler
-  trueHandler = () => {
-    this.setState((currentState) => ({
-      //console.log('IAH')
-      numCorrect: currentState.numCorrect + 1
-    }))
-  }
-  
-  //false answer handler
-  
+  //true answer handler
+  answerHandler = (wasAnswerCorrect) => {
+	//if answer is true increment correct
+    if (wasAnswerCorrect) {
+      this.setState((currentState) => ({
+        numCorrect: currentState.numCorrect + 1,
+    }));
+    }//if end
+    
+    //increment the question anyways
+    this.setState(currState => ({
+      numQuestions: currState.numQuestions + 1,
+    }));
+  };//answerHandler ends
 
   //render method
   render() {
@@ -38,13 +35,11 @@ class App extends Component {
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
         <ShowChallenge 
-        value1={value1}
-        value2={value2}
-        value3={value3}
-        proposedAnswer = {proposedAnswer}
+        //data passage
         numCorrect = {this.state.numCorrect}
         numQuestions = {this.state.numQuestions}
-        onTruePress = {this.trueHandler}
+        //function passage
+        onAnswerPress = {this.answerHandler}
         />
       </div>
     );
